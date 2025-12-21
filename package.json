@@ -1,0 +1,10 @@
+{
+  "name": "com.shen-fengming.unitytools",
+  "displayName": "Unity Tools",
+  "version": "0.1.0",
+  "unity": "6000.2",
+  "description": "Editor tools for creating and managing UPM packages.",
+  "author": {
+    "name": "Shen-fengming"
+  }
+}
