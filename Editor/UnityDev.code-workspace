@@ -11,6 +11,9 @@
 		}
 	],
 	"settings": {
-		"dotnet.defaultSolution": "My project.sln"
+		"dotnet.defaultSolution": "My project.sln",
+		"files.exclude": {
+			"**/*.meta": true
+		}
 	}
 }
