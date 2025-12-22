@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../../../My_HollowKnight/learningAnimations/My project"
+		},
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../com.shen-fengming.trycharacter"
+		}
+	],
+	"settings": {
+		"dotnet.defaultSolution": "My project.sln"
+	}
+}
