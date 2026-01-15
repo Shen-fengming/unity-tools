@@ -6,6 +6,8 @@ using System.Text.RegularExpressions;
 using System.Diagnostics;
 using UnityEditor;
 using UnityEngine;
+using Unity.Plastic.Newtonsoft.Json.Linq;
+using System.Xml;
 
 namespace ShenFengming.UnityTools
 {
@@ -224,22 +226,44 @@ namespace ShenFengming.UnityTools
             return $"{major}.{minor}.{patch}";
         }
 
+        // private static void UpdatePackageJsonVersion(string packageRoot, string newVersion)
+        // {
+        //     var pj = Path.Combine(packageRoot, "package.json");
+        //     var json = File.ReadAllText(pj);
+
+        //     var regex = new Regex("\"version\"\\s*:\\s*\"([^\"]*)\"");
+        //     var match = regex.Match(json);
+
+        //     if (!match.Success)
+        //         throw new Exception("package.json does not contain a version field.");
+
+        //     var updated =
+        //         json.Substring(0, match.Index)
+        //         + $"\"version\": \"{newVersion}\""
+        //         + json.Substring(match.Index + match.Length);
+
+        //     File.WriteAllText(pj, updated, new UTF8Encoding(false));
+        // }
+
         private static void UpdatePackageJsonVersion(string packageRoot, string newVersion)
         {
             var pj = Path.Combine(packageRoot, "package.json");
-            var json = File.ReadAllText(pj);
+            if (!File.Exists(pj))
+                throw new FileNotFoundException("package.json not found.", pj);
 
-            var regex = new Regex("\"version\"\\s*:\\s*\"([^\"]*)\"");
-            var match = regex.Match(json);
+            var json = File.ReadAllText(pj, Encoding.UTF8);
 
-            if (!match.Success)
+            var root = JObject.Parse(json);
+
+            if (root["version"] == null)
                 throw new Exception("package.json does not contain a version field.");
 
-            var updated =
-                json.Substring(0, match.Index)
-                + $"\"version\": \"{newVersion}\""
-                + json.Substring(match.Index + match.Length);
+            root["version"] = newVersion;
 
+            // Preserve formatting (2 spaces is common for package.json)
+            var updated = root.ToString((Unity.Plastic.Newtonsoft.Json.Formatting)Formatting.Indented);
+
+            // Write without BOM (Unity-friendly)
             File.WriteAllText(pj, updated, new UTF8Encoding(false));
         }
 
