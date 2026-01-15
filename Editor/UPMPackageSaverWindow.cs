@@ -40,12 +40,17 @@ namespace ShenFengming.UnityTools
 
             EditorGUILayout.Space(6);
             EditorGUILayout.LabelField("Commit Message", EditorStyles.boldLabel);
-            commitMessage = EditorGUILayout.TextField(commitMessage);
+
+            commitMessage = EditorGUILayout.TextArea(
+                commitMessage,
+                GUILayout.MinHeight(40),
+                GUILayout.ExpandHeight(true)
+            );
 
             EditorGUILayout.Space(12);
             using (new EditorGUI.DisabledScope(!CanSave()))
             {
-                if (GUILayout.Button("Save (git add/commit/tag + bump patch)", GUILayout.Height(40)))
+                if (GUILayout.Button("Save (git add/commit/tag", GUILayout.Height(40)))
                 {
                     Save();
                 }

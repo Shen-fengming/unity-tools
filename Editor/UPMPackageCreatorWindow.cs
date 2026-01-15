@@ -53,6 +53,8 @@ namespace ShenFengming.UnityTools
             useGit = EditorGUILayout.ToggleLeft("Use Git (git init + commit + tag)", useGit);
 
             EditorGUILayout.Space(10);
+
+            // Disable the create button if the requirements are not satisfied.
             using (new EditorGUI.DisabledScope(!CanCreate()))
             {
                 if (GUILayout.Button("Create Package", GUILayout.Height(36)))
@@ -243,7 +245,8 @@ UserSettings/
             // "6000.2.6f1" -> "6000.2"
             var parts = Application.unityVersion.Split('.');
             if (parts.Length >= 2) return $"{parts[0]}.{parts[1]}";
-            return "6000.2";
+            // If no version is detected
+            return "No version is detected";
         }
 
         private static string EscapeJson(string s)
